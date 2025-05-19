@@ -4,10 +4,12 @@ package com.spring.learning.library_management.books.controller;
 import com.spring.learning.library_management.books.dto.request.AddUpdateBook;
 import com.spring.learning.library_management.books.dto.request.AssignBookToUser;
 import com.spring.learning.library_management.books.dto.request.FetchBookByTitle;
+import com.spring.learning.library_management.books.dto.request.FetchByGenre;
 import com.spring.learning.library_management.books.repository.BookRepository;
 import com.spring.learning.library_management.books.service.IBookService;
 import com.spring.learning.library_management.common.dto.RestApiResponse;
 import lombok.*;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -58,9 +60,9 @@ public class BooksController {
     }
 
 
-    @GetMapping("/fetch-by-genre/{genre}")
-    public ResponseEntity<RestApiResponse<Object>> getBookByGenre(@PathVariable String genre) {
-        return ResponseEntity.ok(RestApiResponse.buildSuccess(bookService.findByGenre(genre)));
+    @PostMapping("/fetch-by-genre")
+    public ResponseEntity<RestApiResponse<Object>> getBookByGenre(@RequestBody FetchByGenre fetchByGenre) {
+        return ResponseEntity.ok(RestApiResponse.buildSuccess(bookService.findByGenre(fetchByGenre)));
     }
 
 

@@ -3,10 +3,12 @@ package com.spring.learning.library_management.books.service;
 import com.spring.learning.library_management.books.dto.request.AddUpdateBook;
 import com.spring.learning.library_management.books.dto.request.AssignBookToUser;
 import com.spring.learning.library_management.books.dto.request.FetchBookByTitle;
+import com.spring.learning.library_management.books.dto.request.FetchByGenre;
 import com.spring.learning.library_management.books.entity.Book;
 import com.spring.learning.library_management.books.entity.BookAssignmentHistory;
 import com.spring.learning.library_management.books.entity.BookInventory;
 import com.spring.learning.library_management.books.repository.BookAssignmentHistoryRepository;
+import com.spring.learning.library_management.books.repository.BookCustomRepository;
 import com.spring.learning.library_management.books.repository.BookInventoryRepository;
 import com.spring.learning.library_management.books.repository.BookRepository;
 import com.spring.learning.library_management.user.repository.UserRepository;
@@ -32,6 +34,7 @@ public class BookServiceImpl implements IBookService {
     private final UserRepository userRepository;
     private final BookAssignmentHistoryRepository bookAssignmentHistoryRepository;
     private final BookInventoryRepository bookInventoryRepository;
+    private final BookCustomRepository bookCustomRepository;
 
 
     public String addBook(AddUpdateBook addUpdateBook) {
@@ -65,16 +68,16 @@ public class BookServiceImpl implements IBookService {
         if ( fetchBookByTitle.getTitle().isEmpty()) {
             throw new IllegalArgumentException("Title cannot be null or empty");
         }
-        List<Book> books = bookRepository.findByTitle(fetchBookByTitle.getTitle());
+        List<Book> books = bookCustomRepository.findByTitle(fetchBookByTitle.getTitle());
         return books.isEmpty() ? List.of() : books;
     }
 
     @Override
-    public List<Book> findByGenre(String genre) {
-        if (genre == null || genre.isEmpty()) {
+    public List<Book> findByGenre(FetchByGenre fetchByGenre) {
+        if (Objects.isNull(fetchByGenre)) {
             throw new IllegalArgumentException("Genre cannot be null or empty");
         }
-        return bookRepository.findByGenre(genre);
+        return bookCustomRepository.findByGenre(fetchByGenre.getGenre());
     }
 
     @Override
