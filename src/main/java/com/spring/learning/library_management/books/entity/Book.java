@@ -31,4 +31,8 @@ public class Book {
     @Column(name = "genre")
     private String genre;
 
+
+    @Column(name = "status")
+    private Boolean status;
+
 }

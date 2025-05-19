@@ -17,8 +17,12 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
+
+import static org.hibernate.internal.util.collections.ArrayHelper.forEach;
 
 
 /**
@@ -144,6 +148,45 @@ public class BookServiceImpl implements IBookService {
 
 
         return "Book with title " + book.getTitle() + " assigned to user "+ user.getUserId() + " successfully";
+    }
+
+    @Override
+    public Optional<Book> findById(Long id) {
+        if (id == null) {
+            throw new IllegalArgumentException("Book ID cannot be null");
+        }
+        Optional<Book> book = bookRepository.findById(id);
+        if (book.isPresent()) {
+            return book;
+        } else {
+            throw new RuntimeException("Book not found with id: " + id);
+        }
+    }
+
+    @Override
+    public List<Book> findAll() {
+        return bookRepository.findAll();
+    }
+
+    @Override
+    public void deleteByTitle(String name) throws Exception {
+        List<Book> books = bookCustomRepository.findByTitle(name);
+        if(Objects.isNull(books) || books.isEmpty()) {
+            throw new Exception("Book not found with title: " + name);
+        }
+        if (books.size() > 1) {
+            throw new Exception("Multiple books found with title: " + name + ". Total books are: " + books.size());
+
+        }
+
+        log.info("Deleting book with matching title: {}", name);
+        List<Book> booksToUpdate = new ArrayList<>();
+        for(Book book : books) {
+            book.setStatus(false);
+            booksToUpdate.add(book);
+        }
+        bookRepository.saveAll(booksToUpdate);
+        log.info("Book with matching title {} deleted successfully", name);
     }
 
 

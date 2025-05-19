@@ -5,7 +5,6 @@ import com.spring.learning.library_management.books.dto.request.AddUpdateBook;
 import com.spring.learning.library_management.books.dto.request.AssignBookToUser;
 import com.spring.learning.library_management.books.dto.request.FetchBookByTitle;
 import com.spring.learning.library_management.books.dto.request.FetchByGenre;
-import com.spring.learning.library_management.books.repository.BookRepository;
 import com.spring.learning.library_management.books.service.IBookService;
 import com.spring.learning.library_management.common.dto.RestApiResponse;
 import lombok.*;
@@ -18,19 +17,18 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class BooksController {
 
-    private final BookRepository bookRepository;
     private final IBookService bookService;
 
 
     @GetMapping("/fetch-all")
     public ResponseEntity<RestApiResponse<Object>> getAllBooks() {
-        return ResponseEntity.ok(RestApiResponse.buildSuccess(bookRepository.findAll()));
+        return ResponseEntity.ok(RestApiResponse.buildSuccess(bookService.findAll()));
     }
 
 
     @GetMapping("/fetch-by-id/{id}")
     public ResponseEntity<RestApiResponse<Object>> getBookById(@PathVariable Long id) {
-        return ResponseEntity.ok(RestApiResponse.buildSuccess(bookRepository.findById(id)
+        return ResponseEntity.ok(RestApiResponse.buildSuccess(bookService.findById(id)
                 .orElseThrow(() -> new RuntimeException("Book not found with id: " + id))));
 
     }
@@ -42,9 +40,9 @@ public class BooksController {
     }
 
 
-    @DeleteMapping("/delete-book/{name}")
-    public ResponseEntity<RestApiResponse<Object>> deleteBook(@PathVariable String name) {
-        bookRepository.deleteByTitle(name);
+    @DeleteMapping("/delete-book-by-title")
+    public ResponseEntity<RestApiResponse<Object>> deleteBook(@RequestParam String title) throws Exception {
+        bookService.deleteByTitle(title);
         return ResponseEntity.ok(RestApiResponse.buildSuccess("Book deleted successfully"));
     }
 
@@ -54,13 +52,13 @@ public class BooksController {
     }
 
 
-    @PostMapping("/fetch-by-title")
+    @GetMapping("/fetch-by-title")
     public ResponseEntity<RestApiResponse<Object>> getBookByTitle(@RequestBody FetchBookByTitle fetchBookByTitle) {
         return ResponseEntity.ok(RestApiResponse.buildSuccess(bookService.findByTitle(fetchBookByTitle)));
     }
 
 
-    @PostMapping("/fetch-by-genre")
+    @GetMapping("/fetch-by-genre")
     public ResponseEntity<RestApiResponse<Object>> getBookByGenre(@RequestBody FetchByGenre fetchByGenre) {
         return ResponseEntity.ok(RestApiResponse.buildSuccess(bookService.findByGenre(fetchByGenre)));
     }
