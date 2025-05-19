@@ -2,7 +2,6 @@ package com.spring.learning.library_management.books.repository;
 
 import com.spring.learning.library_management.books.entity.Book;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.Tuple;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;

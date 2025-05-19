@@ -1,5 +1,6 @@
 package com.spring.learning.library_management.user.service;
 
+import com.spring.learning.library_management.user.dto.request.UserByEmail;
 import com.spring.learning.library_management.user.entity.User;
 import com.spring.learning.library_management.user.repository.UserCustomRepository;
 import com.spring.learning.library_management.user.repository.UserRepository;
@@ -17,7 +18,7 @@ public class UserServiceImpl implements IUserService {
 
 
     @Override
-    public List<User> findByEmail(String email) {
-        return userCustomRepository.findByEmail(email);
+    public List<User> findByEmail(UserByEmail userByEmail) throws Exception {
+        return userCustomRepository.findByEmail(userByEmail.getEmail());
     }
 }
