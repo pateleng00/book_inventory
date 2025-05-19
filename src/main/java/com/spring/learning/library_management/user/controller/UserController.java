@@ -2,6 +2,7 @@ package com.spring.learning.library_management.user.controller;
 
 
 import com.spring.learning.library_management.common.dto.RestApiResponse;
+import com.spring.learning.library_management.user.dto.request.CreateUser;
 import com.spring.learning.library_management.user.dto.request.UserByEmail;
 import com.spring.learning.library_management.user.repository.UserRepository;
 import com.spring.learning.library_management.user.service.IUserService;
@@ -33,5 +34,18 @@ public class UserController {
     public ResponseEntity<RestApiResponse<Object>> getUserByEmail(@RequestBody UserByEmail userByEmail ) throws Exception {
         return ResponseEntity.ok(RestApiResponse.buildSuccess(userService.findByEmail(userByEmail)));
     }
+
+    @PostMapping("/add")
+    public ResponseEntity<RestApiResponse<Object>> addUser(@RequestBody CreateUser createUser) throws Exception {
+        return ResponseEntity.ok(RestApiResponse.buildSuccess(userService.addUser(createUser)));
+    }
+
+
+    @DeleteMapping("/deactivate-user/{id}")
+    public ResponseEntity<RestApiResponse<Object>> deleteUser(@PathVariable Long id) {
+        userService.deleteById(id);
+        return ResponseEntity.ok(RestApiResponse.buildSuccess("User deactivated successfully with id: " + id));
+    }
+
 
 }

@@ -30,6 +30,9 @@ public class User {
     @Column(name = "contact", nullable = false)
     private String contact;
 
+    @Column(name = "status", nullable = false)
+    private Boolean status;
+
 
 
 
