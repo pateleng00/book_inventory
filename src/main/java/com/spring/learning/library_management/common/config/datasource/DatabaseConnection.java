@@ -1,4 +1,4 @@
-package com.spring.learning.library_management.common.datasource;
+package com.spring.learning.library_management.common.config.datasource;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
