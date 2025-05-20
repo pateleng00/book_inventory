@@ -104,7 +104,7 @@ spring.jpa.properties.hibernate.format_sql=true
 \| DELETE | `/books?title=...` | Delete by title |
 \| POST   | `/books/assign` | Assign book to user |
 
-> Full path includes prefix `/library-management` e.g. `GET /library-management/books`.
+> Full path includes prefix `/library-management` e.g. `GET /library-management/user`.
 
 ### Sample request – Add Book
 

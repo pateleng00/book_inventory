@@ -12,7 +12,7 @@
 	<artifactId>library-management</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>library-management</name>
-	<description>Library Management project for Spring Boot</description>
+	<description>Library Management project using Spring Boot MySql JPA and Rest APIs</description>
 	<url/>
 	<licenses>
 		<license/>
